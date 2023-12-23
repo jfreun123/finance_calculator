@@ -20,16 +20,15 @@ class Events:
     
     def random_rate(self):
         n = random.random()
-        if n <= .1:
-            return 1.15
-        elif n <= .99:
-            return 1.05
-        elif n <= 1:
-            return .75
-        return 0
+        if n <= .1: return 1.15
+        if n <= .8: return 1.05
+        if n <= 1:  return .75
     
     def savings_at_year(self, year):
-        return 25_000 * (self.__inflation ** year)
+        if (year + 23) <= 25: return 25_000 * (self.__inflation ** year)
+        if (year + 23) <= 25: return 25_000 * (self.__inflation ** year)
+        if (year + 23) <= 25: return 25_000 * (self.__inflation ** year)
+        return 
     
     def process_year(self, year, starting_amount):
         starting_amount *= self.random_rate()
