@@ -1,15 +1,15 @@
 class Tax:
-    
+    __CONS_ADJUST = 1.00
     @staticmethod
     def federal_tax(salary):
         tax_bracket = [
-            (11_000, .10),
-            (44_725, .12),
-            (95_375, .22),
-            (182_100, .24),
-            (231_250, .32),
-            (578_125, .35),
-            (float('inf'), 37)
+            (10_275, .10),
+            (41_775, .12),
+            (89_075, .22),
+            (170_050, .24),
+            (215_950, .32),
+            (539_900, .35),
+            (float('inf'), .37)
         ]
         return Tax.__process_bracket(tax_bracket=tax_bracket, salary=salary)
     
@@ -42,15 +42,17 @@ class Tax:
     @staticmethod
     def __process_bracket(tax_bracket, salary):
         res = 0
-        for (bucket, rate) in tax_bracket:
-            to_tax = min(bucket, salary)
+        bucket_lower = 0
+        for (bucket_upper, rate) in tax_bracket:
+            to_tax = min(bucket_upper - bucket_lower, salary)
             res += (to_tax * rate)
             salary -= to_tax
+            bucket_lower = bucket_upper
         return res
     
     @staticmethod
     def fica_and_state(salary):
-        return 9114 + (salary * .025)
+        return 9114 + (salary * .015)
     
     @staticmethod
     def all_tax(salary):
@@ -58,4 +60,13 @@ class Tax:
         state_tax_nyc = Tax.state_tax_nyc(salary=salary)
         city_tax_nyc = Tax.city_tax_nyc(salary=salary)
         fica_and_state = Tax.fica_and_state(salary=salary)
-        return federal_tax + state_tax_nyc + city_tax_nyc + fica_and_state
+
+        # print(f"Federal Tax:  {federal_tax / 24}")
+        # print(f"State Tax:  {state_tax_nyc / 24}")
+        # print(f"City Tax:  {city_tax_nyc / 24}")
+        # print(f"Fica Tax:  {fica_and_state / 24}")
+
+        return Tax.__CONS_ADJUST * (federal_tax + 
+                                    state_tax_nyc + 
+                                    city_tax_nyc + 
+                                    fica_and_state)
