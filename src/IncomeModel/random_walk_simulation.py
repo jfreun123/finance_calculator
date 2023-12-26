@@ -2,10 +2,10 @@ from IncomeModel.events_utils import Events
 
 
 class Simulation:
-    def __init__(self, total_years, starting_amount, retirement_year, inflation):
-        self.__total_years = total_years
+    def __init__(self, end_age, starting_amount, retirement_age, inflation, curr_age):
+        self.__total_years = end_age - curr_age + 1
         self.__starting_amount = starting_amount
-        self.__event_helper = Events(retirement_year=retirement_year, inflation=inflation)
+        self.__event_helper = Events(retirement_age=retirement_age, inflation=inflation, curr_age=curr_age)
 
     def single_simulation(self):
         results_per_year = [self.__starting_amount]
