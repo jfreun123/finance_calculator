@@ -4,10 +4,16 @@ from SalaryCalculations.tax import Tax
 class Salary:
     __ROTH_MAX = 22_500
 
-    def __init__(self, salary, roth_deductions):
+    def __init__(self, roth_deductions, salary, post_tax_semi_monthly=0):
         self.__salary = salary
-        self.__take_home_salary = self.__calculate_take_home(salary, roth_deductions)
         self.__roth_deductions = roth_deductions
+        if (post_tax_semi_monthly == 0):
+            self.__take_home_salary = self.__calculate_take_home(salary, roth_deductions)
+        if(post_tax_semi_monthly != 0):
+            self.__take_home_salary = 24 * post_tax_semi_monthly
+
+    
+
     
     def __calculate_take_home(self, salary, roth_deductions):
         ret = salary - Tax.all_tax(salary=salary) - roth_deductions

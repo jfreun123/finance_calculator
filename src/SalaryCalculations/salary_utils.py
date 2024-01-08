@@ -12,7 +12,7 @@ class SalaryUtils:
             return abs(num1 - num2) < 10
         low = 0
         high = upper_bound
-        currSalary = Salary(0)
+        currSalary = Salary(salary=0, roth_deductions=roth_deductions)
         currRent = 0
         while (not close(currRent, target_rent)):
             mid = (low + high) >> 1

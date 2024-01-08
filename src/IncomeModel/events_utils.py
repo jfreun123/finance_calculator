@@ -12,7 +12,9 @@ class Events:
     def year_adjusted(self, year):
         return self.__age+year
     
-    def random_big_event(self, year):
+    def random_big_event(self, year, curr_amount):
+        if (curr_amount == 0):
+            return 0
         n = random.random()
         ret = 0
         if n < .8:
@@ -23,7 +25,6 @@ class Events:
             ret = -20_000
         else:
             ret = -40_000
-
         return ret * (self.__inflation ** year)
     
     def random_rate(self, year):
@@ -31,32 +32,28 @@ class Events:
             return 1.05
 
         n = random.random()
-        if n <= .2: return 1.15
+        if n <= .2: return 1.2
         elif n <= .8: return 1.07
         return .75
     
     def retire(self, year, curr_amount):
-        ret = -50_000 * (self.__inflation ** year)
-        return ret
+        ideal = -90_000 * (self.__inflation ** year)
+        conservative = -curr_amount * .07
+        return ideal
+        return max(ideal, conservative)
     
     def savings_at_year(self, year, curr_amount):
         if (curr_amount <= 0):
             return 0
+        
         salary = 0            
-        if self.year_adjusted(year) <= 24: 
+        if self.year_adjusted(year) <= 27: 
             salary=178_000
-        elif self.year_adjusted(year) <= 27: 
-            salary=300_000
-        elif self.year_adjusted(year) <= 40: 
-            salary=700_000
-        elif self.year_adjusted(year) < self.__retirement_age: 
-            salary=90_000
+        elif self.year_adjusted(year) <= self.__retirement_age: 
+            salary=270_000
         else:
             return self.retire(year, curr_amount)
         
-    
-
-
         sal_obj = Salary(salary=salary, roth_deductions=16_750)
         return (sal_obj.recommended_yearly_savings()
                  * (self.__inflation ** year))
@@ -76,10 +73,10 @@ class Events:
                format(event), format(net)))
     
     def process_year(self, year, starting_amount):
-        
         rate = self.random_rate(year)
         savings = self.savings_at_year(year, curr_amount=starting_amount)
-        event = self.random_big_event(year)
+        event = self.random_big_event(year, curr_amount=starting_amount)
+
         self.print_info(rate=rate, 
                    savings=savings, 
                    event=event, 
