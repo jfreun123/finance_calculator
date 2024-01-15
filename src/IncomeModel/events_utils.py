@@ -32,7 +32,7 @@ class Events:
             return 1.05
 
         n = random.random()
-        if n <= .2: return 1.2
+        if n <= .7: return 1.2
         elif n <= .8: return 1.07
         return .75
     
@@ -47,10 +47,12 @@ class Events:
             return 0
         
         salary = 0            
-        if self.year_adjusted(year) <= 27: 
+        if self.year_adjusted(year) <= 25: 
             salary=178_000
-        elif self.year_adjusted(year) <= self.__retirement_age: 
-            salary=270_000
+        elif self.year_adjusted(year) <= 28: 
+            salary=400_000
+        elif self.year_adjusted(year) <= 32:
+            salary=600_000
         else:
             return self.retire(year, curr_amount)
         

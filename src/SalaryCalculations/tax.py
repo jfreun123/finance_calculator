@@ -61,10 +61,10 @@ class Tax:
         city_tax_nyc = Tax.city_tax_nyc(salary=salary)
         fica_and_state = Tax.fica_and_state(salary=salary)
 
-        print(f"Federal Tax:  {federal_tax / 24}")
-        print(f"State Tax:  {state_tax_nyc / 24}")
-        print(f"City Tax:  {city_tax_nyc / 24}")
-        print(f"Fica Tax:  {fica_and_state / 24}")
+        # print(f"Federal Tax:  {federal_tax / 24}")
+        # print(f"State Tax:  {state_tax_nyc / 24}")
+        # print(f"City Tax:  {city_tax_nyc / 24}")
+        # print(f"Fica Tax:  {fica_and_state / 24}")
 
         return Tax.__CONS_ADJUST * (federal_tax + 
                                     state_tax_nyc + 

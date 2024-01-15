@@ -5,8 +5,8 @@ class Salary:
     __ROTH_MAX = 22_500
 
     def __init__(self, roth_deductions, salary, post_tax_semi_monthly=0):
-        self.__salary = salary
         self.__roth_deductions = roth_deductions
+        self.__salary = salary
         if (post_tax_semi_monthly == 0):
             self.__take_home_salary = self.__calculate_take_home(salary, roth_deductions)
         if(post_tax_semi_monthly != 0):
@@ -35,15 +35,19 @@ class Salary:
         return self.__take_home_salary / 24
     
     def recommended_yearly_savings(self):
-        return (self.__take_home_salary * .3) + Salary.__ROTH_MAX
+        return (12 *(self.monthy() - self.recommended_monthly_fun() - self.recommended_monthly_rent())) + Salary.__ROTH_MAX
     
     def recommended_monthly_rent(self):
-        return (self.__take_home_salary * .35) / 12
+        return self.monthy() * .35
+    
+    def recommended_monthly_fun(self):
+        return min(self.monthy() * .35, 3500)
     
     def __str__(self):
         res = f"\nWith a salary of {format(self.salary())} and roth deductions of {format(self.roth_deductions())}\n"
         res += f"you will have a semi-monthly paycheck of {format(self.semi_monthy())} and\n"
         res += f"you can save {format(self.recommended_yearly_savings())} per year\n"
+        res += f"spend {format(self.recommended_monthly_fun())} for fun per month\n"
         res += f"and spend {format(self.recommended_monthly_rent())} on rent.\n"
         return res
     

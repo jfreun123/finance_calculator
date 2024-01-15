@@ -3,7 +3,7 @@ from IncomeModel.plotter import Plotter
 from IncomeModel.random_walk_simulation import Simulation
 
 
-sim = Simulation(end_age=105, 
+sim = Simulation(end_age=30, 
                  curr_age=23,
                  retirement_age=60, 
                  starting_amount=30_000, 
