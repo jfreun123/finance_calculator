@@ -8,8 +8,7 @@ class SalaryUtils:
             return SalaryUtils.__binary_search(target_rent=rent, 
                                                roth_deductions=roth_deductions, 
                                                monthly_rent_percent=monthly_rent_percent, 
-                                               monthly_fun_percent=monthly_fun_percent,
-                                               enable_tax_calculations=enable_tax_calculations)
+                                               monthly_fun_percent=monthly_fun_percent)
         else:
             return Salary(salary="N/A", 
                           post_tax_semi_monthly=rent / monthly_rent_percent,
@@ -18,7 +17,7 @@ class SalaryUtils:
                           monthly_fun_percent=monthly_fun_percent)
     
     @staticmethod
-    def __binary_search(target_rent, roth_deductions, monthly_rent_percent, monthly_fun_percent, enable_tax_calculations, upper_bound=1_000_000_000):
+    def __binary_search(target_rent, roth_deductions, monthly_rent_percent, monthly_fun_percent, upper_bound=1_000_000_000):
         def close(num1, num2):
             return abs(num1 - num2) < 1
         def getNewSalary(mid):
