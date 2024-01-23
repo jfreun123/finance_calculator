@@ -46,12 +46,13 @@ def savings_at_year(iter, curr_amount):
             ideal = Events.inflation_adjusted(-50_000, yearly_inflation_rate, iter)
             return ideal
     
-    salary = 0            
-    if Events.real_age(iter, curr_age) <= 25: 
+    salary = 0    
+    real_age = Events.real_age(iter, curr_age)      
+    if real_age <= 25: 
         salary=190_000
-    elif Events.real_age(iter, curr_age) <= 28: 
+    elif real_age <= 28: 
         salary=300_000
-    elif Events.real_age(iter, curr_age) <= retirement_age:
+    elif real_age <= retirement_age:
         salary=600_000
     else:
         return retire(iter, curr_amount)
