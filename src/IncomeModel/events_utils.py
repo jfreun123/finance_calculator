@@ -9,12 +9,16 @@ class Events:
         self.__random_big_event = random_big_event
 
     @staticmethod
-    def year_adjusted(year, curr_age):
-        return curr_age+year
+    def real_age(iter, curr_age):
+        return curr_age+iter
     
     @staticmethod
-    def print_info(rate, savings, event, starting_amount, year, curr_age):
-        if (Events.year_adjusted(year, curr_age) == curr_age):
+    def inflation_adjusted(amount, inflation_rate, iter):
+        return amount * (inflation_rate ** iter)
+    
+    @staticmethod
+    def print_info(rate, savings, event, starting_amount, iter, curr_age):
+        if (Events.real_age(iter, curr_age) == curr_age):
             print("\n%-3s    %-20s   %-4s   %-19s   %-21s   %-19s   %-20s" %
                   ("Age", "Current Balance", 
                    "ROI", "Market Gain", "Salary Savings", 
@@ -23,19 +27,19 @@ class Events:
         savings_from_investments = (rate - 1) * starting_amount
         net = savings + savings_from_investments + event
         print("%-3.0f    %-20s   %-3.2f   %-20s  %-20s    %-20s  %-20s" % 
-              (Events.year_adjusted(year, curr_age), format(starting_amount), rate, 
+              (Events.real_age(iter, curr_age), format(starting_amount), rate, 
                format(savings_from_investments), format(savings), 
                format(event), format(net)))
     
-    def process_year(self, year, starting_amount):
-        rate = self.__random_rate(year)
-        savings = self.__savings_at_year(year, curr_amount=starting_amount)
-        event = self.__random_big_event(year, curr_amount=starting_amount)
+    def process_year(self, iter, starting_amount):
+        rate = self.__random_rate(iter)
+        savings = self.__savings_at_year(iter, curr_amount=starting_amount)
+        event = self.__random_big_event(iter, curr_amount=starting_amount)
 
         Events.print_info(rate=rate, 
                    savings=savings, 
                    event=event, 
                    starting_amount=starting_amount,
-                   year=year,
+                   iter=iter,
                    curr_age=self.__age)
         return (starting_amount * rate) + savings + event
