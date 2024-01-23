@@ -33,7 +33,7 @@ class SalaryUtils:
         while (not close(currRent, target_rent)):
             mid = (low + high) >> 1
             currSalary = getNewSalary(mid=mid)
-            currRent = currSalary.recommended_monthly_rent()
+            currRent = currSalary.monthly_rent()
             if (currRent > target_rent):
                 high = mid
             if (currRent < target_rent):

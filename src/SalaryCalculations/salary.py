@@ -38,20 +38,20 @@ class Salary:
         return self.__take_home_salary / 24
     
     def recommended_yearly_savings(self):
-        return (12 *(self.monthly() - self.recommended_monthly_fun() - self.recommended_monthly_rent())) + Salary.__ROTH_MAX
+        return (12 *(self.monthly() - self.monthly_fun() - self.monthly_rent())) + Salary.__ROTH_MAX
     
-    def recommended_monthly_rent(self):
+    def monthly_rent(self):
         return self.monthly() * self.__monthly_rent_percent
     
-    def recommended_monthly_fun(self):
+    def monthly_fun(self):
         return min(self.monthly() * self.__monthly_fun_percent, self.__monthly_fun_max)
     
     def __str__(self):
         res = f"\nWith a salary of {format(self.salary()) if type(self.salary()) is int else self.salary()} and roth deductions of {format(self.roth_deductions())}\n"
         res += f"you will have a semi-monthly paycheck of {format(self.semi_monthly())} and\n"
         res += f"you can save {format(self.recommended_yearly_savings())} per year\n"
-        res += f"spend {format(self.recommended_monthly_fun())} for fun per month\n"
-        res += f"and spend {format(self.recommended_monthly_rent())} on rent.\n"
+        res += f"spend {format(self.monthly_fun())} for fun per month\n"
+        res += f"and spend {format(self.monthly_rent())} on rent.\n"
         return res
     
 
