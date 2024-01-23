@@ -5,14 +5,15 @@ from SalaryCalculations.salary import Salary
 
 import random
 
-end_age=105 
 curr_age=23
+end_age=30 
 retirement_age=40 
 starting_amount=30_000 
 yearly_inflation_rate=1.03
 roth_deductions=16_750
-monthly_rent_percent=.1
-monthly_fun_percent=.1
+monthly_rent_percent=.35
+monthly_fun_percent=.35
+monthly_fun_max=3_500
 
 n = 10
 
@@ -37,27 +38,33 @@ def random_rate(iter):
 
         n = random.random()
         if n <= .7: return 1.07
-        elif n <= .8: return 1.20
+        elif n <= .8: return 1.15
         return .75
 
     
 def savings_at_year(iter, curr_amount):
-    def retire( year, curr_amount):
-            ideal = Events.inflation_adjusted(-50_000, yearly_inflation_rate, iter)
-            return ideal
+    def retire(iter, curr_amount):
+        if curr_amount==0:
+            return 0
+        ideal = Events.inflation_adjusted(-50_000, yearly_inflation_rate, iter)
+        return ideal
     
     salary = 0    
-    real_age = Events.real_age(iter, curr_age)      
-    if real_age <= 25: 
+    age = Events.real_age(iter, curr_age)      
+    if age <= 25: 
         salary=190_000
-    elif real_age <= 28: 
-        salary=300_000
-    elif real_age <= retirement_age:
+    elif age <= 28: 
+        salary=500_000
+    elif age <= retirement_age:
         salary=600_000
     else:
         return retire(iter, curr_amount)
     
-    sal_obj = Salary(salary=salary, roth_deductions=roth_deductions, monthly_rent_percent=monthly_rent_percent, monthly_fun_percent=monthly_fun_percent)
+    sal_obj = Salary(salary=salary, 
+                     roth_deductions=roth_deductions, 
+                     monthly_rent_percent=monthly_rent_percent, 
+                     monthly_fun_percent=monthly_fun_percent,
+                     monthly_fun_max=monthly_fun_max)
     return Events.inflation_adjusted(sal_obj.recommended_yearly_savings(), yearly_inflation_rate, iter)
 
 sim = Simulation(starting_amount=starting_amount,
