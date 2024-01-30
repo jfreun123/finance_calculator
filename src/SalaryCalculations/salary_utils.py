@@ -11,7 +11,7 @@ class SalaryUtils:
                                                monthly_fun_percent=monthly_fun_percent)
         else:
             return Salary(salary="N/A", 
-                          post_tax_semi_monthly=rent / monthly_rent_percent,
+                          post_tax_semi_monthly=(rent / monthly_rent_percent) / 2,
                           roth_deductions=roth_deductions, 
                           monthly_rent_percent=monthly_rent_percent,
                           monthly_fun_percent=monthly_fun_percent)

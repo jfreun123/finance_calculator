@@ -38,7 +38,8 @@ def random_rate(iter):
 
         n = random.random()
         if n <= .7: return 1.07
-        elif n <= .8: return 1.15
+        elif n <= .9: return 1.12
+        elif n <= .95: return 1.3
         return .75
 
     
@@ -56,7 +57,7 @@ def savings_at_year(iter, curr_amount):
     elif age <= 28: 
         salary=500_000
     elif age <= retirement_age:
-        salary=600_000
+        salary=800_000
     else:
         return retire(iter, curr_amount)
     
