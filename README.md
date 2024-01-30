@@ -1,1 +1,2 @@
-# finance_calculator
+# Personal Finance Math
+
