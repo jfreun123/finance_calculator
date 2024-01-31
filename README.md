@@ -1,9 +1,9 @@
 # Personal Finance Math
 
 ## Install
-Run the following command from the most outer-directory:  
+Run the following command from the src:  
 ```
-$ pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 ## Features
