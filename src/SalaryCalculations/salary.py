@@ -17,7 +17,7 @@ class Salary:
 
     
     def __calculate_take_home(self, salary, roth_deductions, post_tax_semi_monthly):
-        if (post_tax_semi_monthly is "N/A"):
+        if (post_tax_semi_monthly == "N/A"):
             return max(salary - Tax.all_tax(salary=salary) - roth_deductions, 0)
         else:
             return 24 * post_tax_semi_monthly
@@ -47,7 +47,7 @@ class Salary:
         return min(self.monthly() * self.__monthly_fun_percent, self.__monthly_fun_max)
     
     def __str__(self):
-        res = f"\nWith a salary of {format(self.salary()) if type(self.salary()) is int else self.salary()} and roth deductions of {format(self.roth_deductions())}\n"
+        res = f"\nWith a salary of {format(self.salary()) if type(self.salary()) == int else self.salary()} and roth deductions of {format(self.roth_deductions())}\n"
         res += f"you will have a semi-monthly paycheck of {format(self.semi_monthly())} and\n"
         res += f"you can save {format(self.recommended_yearly_savings())} per year\n"
         res += f"spend {format(self.monthly_fun())} for fun per month\n"

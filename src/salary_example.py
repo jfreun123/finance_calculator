@@ -1,7 +1,6 @@
 from SalaryCalculations.salary import Salary
 
-test = Salary(salary="N/A",
-              post_tax_semi_monthly=7083*.93,
+test = Salary(salary=600_000,
               roth_deductions=16080,
               monthly_rent_percent=.35,
               monthly_fun_percent=.35)

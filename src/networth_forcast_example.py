@@ -6,7 +6,7 @@ from SalaryCalculations.salary import Salary
 import random
 
 curr_age=23
-end_age=30 
+end_age=100
 retirement_age=40 
 starting_amount=30_000 
 yearly_inflation_rate=1.03
@@ -57,7 +57,7 @@ def savings_at_year(iter, curr_amount):
     elif age <= 28: 
         salary=500_000
     elif age <= retirement_age:
-        salary=800_000
+        salary=150_000
     else:
         return retire(iter, curr_amount)
     
@@ -73,7 +73,8 @@ sim = Simulation(starting_amount=starting_amount,
                  end_age=end_age,
                  savings_at_year=savings_at_year,
                  random_rate=random_rate,
-                 random_big_event=random_big_event)
-plotter = Plotter(starting_age = curr_age)
+                 random_big_event=random_big_event
+                 )
+plotter = Plotter(starting_age = curr_age, sim=sim, setting="DL_FULL")
 
-plotter.plot_all(sim.many_simulations(number_of_simulations=n), number_of_simulations=n)
+plotter.plot_all(number_of_simulations=n)
