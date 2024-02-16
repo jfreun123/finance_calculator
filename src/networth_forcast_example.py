@@ -5,11 +5,13 @@ from SalaryCalculations.salary import Salary
 
 import random
 
-curr_age=50
+curr_age=30
 end_age=100
-retirement_age=50 
-retirement_spending_no_inflation = 100_000
-starting_amount=6_000_000 
+age_shift = curr_age - 23
+
+retirement_age=30 
+retirement_spending_no_inflation = -100_000
+starting_amount=20_000_000 
 yearly_inflation_rate=1.03
 roth_deductions=16_750
 monthly_rent_percent=.35
@@ -48,7 +50,7 @@ def savings_at_year(iter, curr_amount):
     def retire(iter, curr_amount):
         if curr_amount==0:
             return 0
-        ideal = Events.inflation_adjusted(retirement_spending_no_inflation, yearly_inflation_rate, iter)
+        ideal = Events.inflation_adjusted(retirement_spending_no_inflation, yearly_inflation_rate, iter+(age_shift))
         return ideal
     
     salary = 0    
@@ -57,7 +59,7 @@ def savings_at_year(iter, curr_amount):
         salary=190_000
     elif age <= 28: 
         salary=500_000
-    elif age <= retirement_age:
+    elif age < retirement_age:
         salary=150_000
     else:
         return retire(iter, curr_amount)
@@ -74,8 +76,9 @@ sim = Simulation(starting_amount=starting_amount,
                  end_age=end_age,
                  savings_at_year=savings_at_year,
                  random_rate=random_rate,
-                 random_big_event=random_big_event
+                 random_big_event=random_big_event,
+                 print_events=True
                  )
-plotter = Plotter(starting_age = curr_age, sim=sim)
+plotter = Plotter(sim=sim)
 
 plotter.plot_all(number_of_simulations=n)

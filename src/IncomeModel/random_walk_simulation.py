@@ -4,9 +4,11 @@ from torch import nn, optim
 
 class Simulation:
     def __init__(self, starting_amount, curr_age, end_age, random_rate, savings_at_year, random_big_event, print_events=False):
-        self.__total_iters = end_age - curr_age+1
+        self.__curr_age = curr_age
+        self.__total_iters = end_age - curr_age
         self.__starting_amount = starting_amount
-        self.__event_helper = Events(curr_age=23,
+        self.__event_helper = Events(curr_age=curr_age,
+                                     end_age=end_age,
                                      random_rate=random_rate, 
                                      savings_at_year=savings_at_year, 
                                      random_big_event=random_big_event,
@@ -22,11 +24,17 @@ class Simulation:
         self.learning_rate = 1e-3
         self.lambda_l2 = 1e-5
 
+    def get_total_iters(self):
+        return self.__total_iters
+    
+    def get_starting_age(self):
+        return self.__curr_age
+
     def single_simulation(self):
         results_per_year = [self.__starting_amount]
         curr_saved = self.__starting_amount
         success = True
-        for iter in range(1, self.__total_iters):
+        for iter in range(0, self.__total_iters):
             curr_saved = max(self.__event_helper.process_year(
                             iter=iter, starting_amount=curr_saved), 0)
             results_per_year.append(curr_saved)
