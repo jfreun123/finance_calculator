@@ -2,11 +2,12 @@ from SalaryCalculations.salary import Salary, format
 
 
 class Events:
-    def __init__(self, curr_age, random_rate, savings_at_year, random_big_event):
+    def __init__(self, curr_age, random_rate, savings_at_year, random_big_event, print_events=False):
         self.__age = curr_age
         self.__random_rate = random_rate
         self.__savings_at_year = savings_at_year
         self.__random_big_event = random_big_event
+        self.__print_events = print_events
 
     @staticmethod
     def real_age(iter, curr_age):
@@ -36,10 +37,11 @@ class Events:
         savings = self.__savings_at_year(iter, curr_amount=starting_amount)
         event = self.__random_big_event(iter, curr_amount=starting_amount)
 
-        Events.print_info(rate=rate, 
-                   savings=savings, 
-                   event=event, 
-                   starting_amount=starting_amount,
-                   iter=iter,
-                   curr_age=self.__age)
+        if self.__print_events:
+            Events.print_info(rate=rate, 
+                    savings=savings, 
+                    event=event, 
+                    starting_amount=starting_amount,
+                    iter=iter,
+                    curr_age=self.__age)
         return (starting_amount * rate) + savings + event

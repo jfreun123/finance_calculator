@@ -3,22 +3,23 @@ import torch
 from torch import nn, optim
 
 class Simulation:
-    def __init__(self, starting_amount, curr_age, end_age, random_rate, savings_at_year, random_big_event):
+    def __init__(self, starting_amount, curr_age, end_age, random_rate, savings_at_year, random_big_event, print_events=False):
         self.__total_iters = end_age - curr_age+1
         self.__starting_amount = starting_amount
         self.__event_helper = Events(curr_age=23,
                                      random_rate=random_rate, 
                                      savings_at_year=savings_at_year, 
-                                     random_big_event=random_big_event)
+                                     random_big_event=random_big_event,
+                                     print_events=print_events)
         
         self.__device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         
-        self.N = 100  # num_samples_per_class
+        self.N = 500  # num_samples_per_class
         self.D = 1  # dimensions
         self.C = 1  # num_classes
-        self.H = 100  # num_hidden_units
+        self.H = 100_000  # num_hidden_units
 
-        self.learning_rate = 1e-8
+        self.learning_rate = 1e-3
         self.lambda_l2 = 1e-5
 
     def single_simulation(self):
@@ -66,9 +67,9 @@ class Simulation:
         X = self.__get_x_tensor()
         self.learning_rate = 1e-0
         model = nn.Sequential(
-            nn.Linear(self.D, self.H),
-            nn.ReLU(),
-            nn.Linear(self.H, self.C)
+            nn.Linear(1, 500),
+            nn.Tanh(),
+            nn.Linear(500, 1000),
         )
 
         model.to(self.__device)
@@ -80,6 +81,7 @@ class Simulation:
         for (y_raw, _) in data_points:
             for t in range(self.N):
                 y = torch.unsqueeze(torch.FloatTensor(y_raw), dim=1)
+                y = self.__normalize(y)
                 y_data.append(y)
                 y_pred = model(X)
                 optimizer.zero_grad()
@@ -92,3 +94,7 @@ class Simulation:
     def __get_x_tensor(self):
         return torch.unsqueeze(torch.arange(0, self.__total_iters, dtype=torch.float32), dim=1).to(self.__device)
 
+    def __normalize(self, y):
+        y -= y.min()
+        y /= y.max()
+        return y
