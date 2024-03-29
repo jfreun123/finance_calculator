@@ -1,5 +1,5 @@
 class SimpleSalary:
-    def __init__(self, yearly_bonus, post_tax_semi_monthly, monthly_rent_percent, monthly_fun_percent, monthly_fun_max=3500):
+    def __init__(self, post_tax_semi_monthly, monthly_rent_percent, monthly_fun_percent, yearly_bonus=0, monthly_fun_max=3500):
         self.__monthly_rent_percent = monthly_rent_percent
         self.__monthly_fun_percent = monthly_fun_percent
         self.__monthly_fun_max = monthly_fun_max
