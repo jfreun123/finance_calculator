@@ -5,13 +5,13 @@ from SalaryCalculations.salary import Salary
 
 import random
 
-curr_age=30
-end_age=100
+curr_age=23
+end_age=30
 age_shift = curr_age - 23
 
-retirement_age=30 
+retirement_age=50 
 retirement_spending_no_inflation = -100_000
-starting_amount=20_000_000 
+starting_amount=60_000 
 yearly_inflation_rate=1.03
 roth_deductions=16_750
 monthly_rent_percent=.35

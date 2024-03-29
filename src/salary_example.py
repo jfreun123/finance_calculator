@@ -2,9 +2,9 @@ from SalaryCalculations.salary_simple import SimpleSalary
 real = 3_531.74
 sa_pred = 3_579
 r = real / sa_pred
-test = SimpleSalary(yearly_bonus=100_000*.4,
-                    post_tax_semi_monthly=6581*r,
-                    monthly_rent_percent=.,
+test = SimpleSalary(post_tax_semi_monthly=5911*r,
+                    yearly_bonus=160_000*.6+22_500,
+                    monthly_rent_percent=.5,
                     monthly_fun_percent=.4)
 print(test)
 
