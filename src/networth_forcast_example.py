@@ -1,9 +1,10 @@
 from IncomeModel.plotter import Plotter
 from IncomeModel.events_utils import Events
 from IncomeModel.random_walk_simulation import Simulation
-from SalaryCalculations.salary import Salary
 
 import random
+
+from SalaryCalculations.salary_simple import SimpleSalary
 
 curr_age=23
 end_age=30
@@ -53,22 +54,24 @@ def savings_at_year(iter, curr_amount):
         ideal = Events.inflation_adjusted(retirement_spending_no_inflation, yearly_inflation_rate, iter+(age_shift))
         return ideal
     
-    salary = 0    
+    post_tax_semi_monthly = 0    
     age = Events.real_age(iter, curr_age)      
     if age <= 25: 
-        salary=190_000
+        post_tax_semi_monthly=3781 # 163k
+        yearly_bonus = 27_000
     elif age <= 28: 
-        salary=500_000
+        post_tax_semi_monthly=4764 # 200k
+        yearly_bonus = 150_000
     elif age < retirement_age:
-        salary=150_000
+        post_tax_semi_monthly=6343 # 270k
+        yearly_bonus = 200_000
     else:
         return retire(iter, curr_amount)
     
-    sal_obj = Salary(salary=salary, 
-                     roth_deductions=roth_deductions, 
-                     monthly_rent_percent=monthly_rent_percent, 
-                     monthly_fun_percent=monthly_fun_percent,
-                     monthly_fun_max=monthly_fun_max)
+    sal_obj = SimpleSalary(post_tax_semi_monthly=post_tax_semi_monthly,
+                           monthly_rent_percent=monthly_rent_percent,
+                           monthly_fun_percent=monthly_fun_percent,
+                           yearly_bonus=22_500+(yearly_bonus*.4))
     return Events.inflation_adjusted(sal_obj.recommended_yearly_savings(), yearly_inflation_rate, iter)
 
 sim = Simulation(starting_amount=starting_amount,
