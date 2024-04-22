@@ -2,11 +2,13 @@ from SalaryCalculations.salary_simple import SimpleSalary
 real = 3_531.74
 sa_pred = 3_579
 r = real / sa_pred
-test = SimpleSalary(post_tax_semi_monthly=5911*r,
-                    yearly_bonus=160_000*.6+22_500,
-                    monthly_rent_percent=.5,
-                    monthly_fun_percent=.4)
-print(test)
+
+citadel = SimpleSalary(post_tax_semi_monthly=4562*r,
+                    post_tax_yearly_bonus=30_000*.49,
+                    roth_savings=22_500,
+                    monthly_rent_percent=.4,
+                    monthly_fun_percent=.6)
+print(citadel)
 
 
 
