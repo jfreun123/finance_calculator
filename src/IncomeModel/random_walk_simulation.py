@@ -1,5 +1,4 @@
 from IncomeModel.events_utils import Events
-from torch import nn, optim
 
 class Simulation:
     def __init__(self, starting_amount, curr_age, end_age, random_rate, savings_at_year, random_big_event, print_events=False):

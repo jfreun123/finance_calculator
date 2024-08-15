@@ -1,4 +1,5 @@
-import matplotlib.pyplot as plt
+import matplotlib
+# matplotlib.use('qtagg')  # Explicitly use the PyQt6Agg backend
 import matplotlib.ticker as mtick
 import matplotlib.pyplot as plt
 

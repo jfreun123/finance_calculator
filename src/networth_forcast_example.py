@@ -1,6 +1,6 @@
-from IncomeModel.plotter import Plotter
 from IncomeModel.events_utils import Events
 from IncomeModel.random_walk_simulation import Simulation
+from IncomeModel.plotter import Plotter
 
 import random
 
@@ -71,7 +71,7 @@ def savings_at_year(iter, curr_amount):
     sal_obj = SimpleSalary(post_tax_semi_monthly=post_tax_semi_monthly,
                            monthly_rent_percent=monthly_rent_percent,
                            monthly_fun_percent=monthly_fun_percent,
-                           yearly_bonus=22_500+(yearly_bonus*.4))
+                           post_tax_yearly_bonus=22_500+(yearly_bonus*.4))
     return Events.inflation_adjusted(sal_obj.recommended_yearly_savings(), yearly_inflation_rate, iter)
 
 sim = Simulation(starting_amount=starting_amount,
@@ -82,6 +82,7 @@ sim = Simulation(starting_amount=starting_amount,
                  random_big_event=random_big_event,
                  print_events=True
                  )
+
 plotter = Plotter(sim=sim)
 
 plotter.plot_all(number_of_simulations=n)
