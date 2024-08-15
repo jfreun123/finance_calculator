@@ -1,5 +1,5 @@
 import matplotlib
-# matplotlib.use('qtagg')  # Explicitly use the PyQt6Agg backend
+matplotlib.use('TkAgg')
 import matplotlib.ticker as mtick
 import matplotlib.pyplot as plt
 
