@@ -61,4 +61,4 @@ class Salary:
     
 
 def format(num):
-    return '${:,.2f}'.format(num)
+    return '${:,.0f}'.format(num)
