@@ -1,4 +1,4 @@
-from SalaryCalculations.tax import Tax
+from FinanceTools.SalaryCalculations.tax import Tax
 
 
 class Salary:

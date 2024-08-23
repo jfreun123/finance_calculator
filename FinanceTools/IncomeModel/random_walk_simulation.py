@@ -1,4 +1,4 @@
-from IncomeModel.events_utils import Events
+from FinanceTools.IncomeModel.events_utils import Events
 
 class Simulation:
     def __init__(self, starting_amount, curr_age, end_age, random_rate, savings_at_year, random_big_event, print_events=False):
@@ -27,7 +27,7 @@ class Simulation:
             curr_saved = max(self.__event_helper.process_year(
                             iter=iter, starting_amount=curr_saved), 0)
             results_per_year.append(curr_saved)
-            if (curr_saved <= 0): success = False
+        if (curr_saved <= 0): success = False
         return (results_per_year, success)
     
     def many_simulations(self, number_of_simulations):

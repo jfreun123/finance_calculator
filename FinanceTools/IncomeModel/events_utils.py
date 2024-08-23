@@ -1,4 +1,4 @@
-from SalaryCalculations.salary import Salary, format
+from FinanceTools.SalaryCalculations.salary import Salary, format
 
 
 class Events:

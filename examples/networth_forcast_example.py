@@ -1,25 +1,25 @@
-from IncomeModel.events_utils import Events
-from IncomeModel.random_walk_simulation import Simulation
-from IncomeModel.plotter import Plotter
+from FinanceTools.IncomeModel.events_utils import Events
+from FinanceTools.IncomeModel.random_walk_simulation import Simulation
+from FinanceTools.IncomeModel.plotter import Plotter
+
+from FinanceTools.SalaryCalculations.salary_simple import SimpleSalary
 
 import random
 
-from SalaryCalculations.salary_simple import SimpleSalary
 
 curr_age=23
-end_age=30
+end_age=50
 age_shift = curr_age - 23
 
 retirement_age=50 
 retirement_spending_no_inflation = -100_000
 starting_amount=60_000 
 yearly_inflation_rate=1.03
-roth_deductions=16_750
 monthly_rent_percent=.35
 monthly_fun_percent=.35
 monthly_fun_max=3_500
 
-n = 100
+n = 10
 
 def random_big_event(iter, curr_amount):
         if (curr_amount == 0):
@@ -43,7 +43,7 @@ def random_rate(iter):
         n = random.random()
         if n <= .7: return 1.07
         elif n <= .9: return 1.12
-        elif n <= .95: return 1.3
+        elif n <= .99: return 1.3
         return .75
 
     
@@ -64,14 +64,14 @@ def savings_at_year(iter, curr_amount):
         yearly_bonus = 150_000
     elif age < retirement_age:
         post_tax_semi_monthly=6343 # 270k
-        yearly_bonus = 200_000
+        yearly_bonus = 300_000
     else:
         return retire(iter, curr_amount)
     
     sal_obj = SimpleSalary(post_tax_semi_monthly=post_tax_semi_monthly,
                            monthly_rent_percent=monthly_rent_percent,
                            monthly_fun_percent=monthly_fun_percent,
-                           post_tax_yearly_bonus=22_500+(yearly_bonus*.4))
+                           post_tax_yearly_bonus=22_500+(yearly_bonus*.2))
     return Events.inflation_adjusted(sal_obj.recommended_yearly_savings(), yearly_inflation_rate, iter)
 
 sim = Simulation(starting_amount=starting_amount,
