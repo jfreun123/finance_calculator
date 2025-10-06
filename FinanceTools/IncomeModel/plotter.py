@@ -23,7 +23,6 @@ class Plotter:
 
     def plot_all(self, number_of_simulations):
         points_gen = self.__sim.many_simulations(number_of_simulations)
-        success_count = 0
         last_numbers = []
 
         # Create 1 figure with 2 subplots (side by side)
@@ -31,13 +30,11 @@ class Plotter:
 
         # ----- Left: all simulated paths -----
         self.prettify_graph(ax1, title=f"{number_of_simulations} Simulations")
-        for sample, success in points_gen:
-            success_count += success
+        for sample in points_gen:
             last_numbers.append(sample[-1])
             ax1.plot(self.__age_axis, sample, alpha=0.3, color='gray')
 
-        ax1.set_title(f"{number_of_simulations} Simulations\n"
-                    f"Success Probability: {success_count / number_of_simulations:.2%}")
+        ax1.set_title(f"{number_of_simulations} Simulations\n")
         ax1.set_xlabel("Age")
         ax1.set_ylabel("Portfolio Value")
         ax1.grid(True, linestyle='--', alpha=0.4)
