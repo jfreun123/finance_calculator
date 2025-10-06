@@ -15,7 +15,7 @@ yearly_inflation_rate=1.03
 monthly_rent_percent=.4
 monthly_fun_percent=.3
 
-n = 10
+n = 100
 
 def random_big_event(iter, curr_amount):
         if (curr_amount == 0):
