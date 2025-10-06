@@ -1,5 +1,5 @@
-from FinanceTools.SalaryCalculations.salary import Salary, format
-
+def format(num):
+    return '${:,.2f}'.format(num)
 
 class Events:
     def __init__(self, curr_age, end_age, random_rate, savings_at_year, random_big_event, print_events=False):
@@ -19,19 +19,19 @@ class Events:
         return amount * (inflation_rate ** iter)
     
     @staticmethod
-    def print_info(rate, savings, event, starting_amount, result, iter, curr_age, end_age):
+    def print_info(rate, salary_obj, event, starting_amount, result, iter, curr_age, end_age):
         if (Events.real_age(iter, curr_age) == curr_age):
-            print("\n%-3s    %-20s   %-4s   %-19s   %-21s   %-19s   %-20s" %
+            print("\n%-3s    %-20s   %-4s   %-19s   %-21s   %-19s   %-20s %-20s %-20s" %
                   ("Age", "Starting Balance", 
                    "ROI", "Market Gain", "Expected Savings", 
-                   "Random Event", "Net Gain"))
+                   "Random Event", "Net Gain", "Monthly Expense", "Monthly Rent"))
             
         savings_from_investments = (rate - 1) * starting_amount
-        net = savings + savings_from_investments + event
-        print("%-3.0f    %-20s   %-3.2f   %-20s  %-20s    %-20s  %-20s" % 
+        net = salary_obj.recommended_yearly_savings(years=iter) + savings_from_investments + event
+        print("%-3.0f    %-20s   %-3.2f   %-20s  %-20s    %-20s  %-20s %-20s %-20s" %
               (Events.real_age(iter, curr_age), format(starting_amount), rate, 
-               format(savings_from_investments), format(savings), 
-               format(event), format(net)))
+               format(savings_from_investments), format(salary_obj.recommended_yearly_savings(years=iter)), 
+               format(event), format(net), format(salary_obj.monthly_fun(years=iter)), format(salary_obj.monthly_rent(years=iter))))
         
         # to display the last year but not act on it
         if (Events.real_age(iter, curr_age) + 1 == end_age):
@@ -40,13 +40,13 @@ class Events:
     
     def process_year(self, iter, starting_amount):
         rate = self.__random_rate(iter)
-        savings = self.__savings_at_year(iter, curr_amount=starting_amount)
+        salary_obj = self.__savings_at_year(iter)
         event = self.__random_big_event(iter, curr_amount=starting_amount)
-        result = (starting_amount * rate) + savings + event
+        result = (starting_amount * rate) + salary_obj.recommended_yearly_savings(years=0) + event
 
         if self.__print_events:
             Events.print_info(rate=rate, 
-                    savings=savings, 
+                    salary_obj=salary_obj, 
                     event=event, 
                     starting_amount=starting_amount,
                     result=result,
