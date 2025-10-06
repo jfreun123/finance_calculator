@@ -44,3 +44,56 @@ class SimpleSalary:
         res += f"spend ${self.monthly_fun():,.2f} for fun per month\n"
         res += f"and spend ${self.monthly_rent():,.2f} on rent.\n"
         return res
+
+
+class InflationAdjustedSalary:
+    """
+    Wraps a SimpleSalary instance and provides inflation-adjusted projections.
+    """
+    def __init__(self, simple_salary: SimpleSalary, inflation_rate=0.03):
+        self.salary = simple_salary
+        self.inflation_rate = inflation_rate
+
+    def adjust_for_inflation(self, amount, years):
+        """Calculate future value after inflation for a given number of years."""
+        return amount * ((1 + self.inflation_rate) ** years)
+
+    # Inflation-adjusted versions of SimpleSalary methods
+    def recommended_yearly_savings(self, years=0):
+        base = self.salary.recommended_yearly_savings()
+        return self.adjust_for_inflation(base, years) if years > 0 else base
+
+    def monthly_savings_no_bonus(self, years=0):
+        base = self.salary.monthly_savings_no_bonus()
+        return self.adjust_for_inflation(base, years) if years > 0 else base
+
+    def monthly_fun(self, years=0):
+        base = self.salary.monthly_fun()
+        return self.adjust_for_inflation(base, years) if years > 0 else base
+
+    def monthly_rent(self, years=0):
+        base = self.salary.monthly_rent()
+        return self.adjust_for_inflation(base, years) if years > 0 else base
+
+    def yearly_bonus(self, years=0):
+        base = self.salary.yearly_bonus()
+        return self.adjust_for_inflation(base, years) if years > 0 else base
+
+    def roth_savings(self, years=0):
+        base = self.salary.roth_savings()
+        return self.adjust_for_inflation(base, years) if years > 0 else base
+
+    # String representation including optional inflation adjustment
+    def __str__(self, projection_years=5):
+        res = "--------- Current Stats --------- \n"
+        res += str(self.salary) + "\n"
+        if projection_years > 0:
+            res += f"--------- Inflation Adjusted Projection ({projection_years} years at {self.inflation_rate*100:.1f}%/year) ---------\n"
+            res += f"Savings in {projection_years} years: ${self.recommended_yearly_savings(projection_years):,.2f}\n"
+            res += f"Monthly savings in {projection_years} years: ${self.monthly_savings_no_bonus(projection_years):,.2f}\n"
+            res += f"Fun money in {projection_years} years: ${self.monthly_fun(projection_years):,.2f}\n"
+            res += f"Rent in {projection_years} years: ${self.monthly_rent(projection_years):,.2f}\n"
+            res += f"Bonus in {projection_years} years: ${self.yearly_bonus(projection_years):,.2f}\n"
+            res += f"Roth in {projection_years} years: ${self.roth_savings(projection_years):,.2f}\n"
+        return res
+
