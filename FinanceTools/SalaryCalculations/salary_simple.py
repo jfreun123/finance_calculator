@@ -1,7 +1,16 @@
-# post_tax_post_roth_base_only_monthly_income does NOT include bonus or roth 
+# post_tax_post_roth_base_only_monthly_income does NOT include bonus or roth
 class SimpleSalary:
-    def __init__(self, post_tax_post_roth_base_only_monthly_income, monthly_rent, monthly_expense, post_tax_yearly_bonus, yearly_roth):
-        self.__post_tax_post_roth_base_only_monthly_income = post_tax_post_roth_base_only_monthly_income
+    def __init__(
+        self,
+        post_tax_post_roth_base_only_monthly_income,
+        monthly_rent,
+        monthly_expense,
+        post_tax_yearly_bonus,
+        yearly_roth,
+    ):
+        self.__post_tax_post_roth_base_only_monthly_income = (
+            post_tax_post_roth_base_only_monthly_income
+        )
         self.__monthly_rent = monthly_rent
         self.__monthly_expense = monthly_expense
         self.__post_tax_yearly_bonus = post_tax_yearly_bonus
@@ -17,11 +26,17 @@ class SimpleSalary:
 
     # Recommended yearly savings = total income - expenses - rent
     def recommended_yearly_savings(self):
-        return self.monthly_savings_no_bonus() * 12 + self.__post_tax_yearly_bonus + self.__yearly_roth
+        return (
+            self.monthly_savings_no_bonus() * 12
+            + self.__post_tax_yearly_bonus
+            + self.__yearly_roth
+        )
 
     # Monthly savings without bonus
     def monthly_savings_no_bonus(self):
-        monthly_savings = self.__post_tax_post_roth_base_only_monthly_income - (self.__monthly_rent + self.__monthly_expense)
+        monthly_savings = self.__post_tax_post_roth_base_only_monthly_income - (
+            self.__monthly_rent + self.__monthly_expense
+        )
         return monthly_savings
 
     # Monthly fun money
@@ -50,6 +65,7 @@ class InflationAdjustedSalary:
     """
     Wraps a SimpleSalary instance and provides inflation-adjusted projections.
     """
+
     def __init__(self, simple_salary: SimpleSalary, inflation_rate=0.03):
         self.salary = simple_salary
         self.inflation_rate = inflation_rate
@@ -96,4 +112,3 @@ class InflationAdjustedSalary:
             res += f"Bonus in {projection_years} years: ${self.yearly_bonus(projection_years):,.2f}\n"
             res += f"Roth in {projection_years} years: ${self.roth_savings(projection_years):,.2f}\n"
         return res
-
