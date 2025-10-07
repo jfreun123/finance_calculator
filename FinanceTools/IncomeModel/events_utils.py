@@ -78,7 +78,7 @@ class Events:
     def process_year(self, iter, starting_amount):
         rate = self.__random_rate(iter)
         salary_obj = self.__savings_at_year(iter)
-        event = self.__random_big_event(iter, curr_amount=starting_amount)
+        event = self.__random_big_event(iter, current_amount=starting_amount)
         result = (
             (starting_amount * rate)
             + salary_obj.recommended_yearly_savings(years=0)
